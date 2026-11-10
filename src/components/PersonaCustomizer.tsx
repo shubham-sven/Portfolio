@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sliders, X, RotateCcw, Check, Sparkles, User, Mail, MapPin } from 'lucide-react';
+import { Sliders, X, RotateCcw, Check, Sparkles, User, Mail, MapPin, Camera, Image, Link } from 'lucide-react';
 import { UserProfile } from '../types';
 import { defaultProfile } from '../data/portfolioData';
 
@@ -122,6 +122,53 @@ export const PersonaCustomizer: React.FC<PersonaCustomizerProps> = ({
                 <span className="text-xs uppercase tracking-widest text-[var(--text-secondary)] font-mono block font-bold">
                   Edit Portfolio Details
                 </span>
+
+                {/* Profile Photo Control */}
+                <div className="space-y-1.5 p-3 rounded-xl bg-[var(--bg-main)] border border-[var(--border-subtle)]">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-mono font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                      <Camera className="w-3.5 h-3.5 text-[var(--accent-yellow)]" />
+                      Profile Picture URL
+                    </label>
+                    <span className="text-[9px] font-mono text-emerald-400">Bundled /profile.jpg</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="/profile.jpg or https://..."
+                      value={profile.avatarUrl || '/profile.jpg'}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        onUpdateProfile({ ...profile, avatarUrl: val });
+                        localStorage.setItem('sven_custom_photo', val);
+                      }}
+                      className="flex-1 bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-lg px-2.5 py-1.5 text-xs text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-yellow)] font-mono"
+                    />
+                    <label className="px-2.5 py-1.5 bg-[var(--accent-yellow)] text-[var(--text-inverse)] text-[11px] font-mono font-bold rounded-lg cursor-pointer hover:bg-[var(--accent-hover)] transition-all flex items-center gap-1">
+                      <span>Upload</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                              const res = evt.target?.result as string;
+                              onUpdateProfile({ ...profile, avatarUrl: res });
+                              localStorage.setItem('sven_custom_photo', res);
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  <p className="text-[10px] text-[var(--text-muted)] font-mono pt-0.5">
+                    For permanent Vercel deploys, replace <code className="text-[var(--text-primary)]">public/profile.jpg</code> in your repo.
+                  </p>
+                </div>
 
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-mono text-[var(--text-secondary)]">Display Name</label>

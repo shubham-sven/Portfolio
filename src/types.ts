@@ -114,4 +114,5 @@ export interface UserProfile {
   facebookUrl?: string;
   dribbbleUrl: string;
   twitterUrl: string;
+  avatarUrl?: string;
 }
