@@ -21,7 +21,7 @@ export const defaultProfile: UserProfile = {
   facebookUrl: 'https://www.facebook.com/share/1ML7N89drB/',
   dribbbleUrl: 'https://github.com/shubham-sven',
   twitterUrl: 'https://www.linkedin.com/in/shubham-sven-6810932ba/',
-  avatarUrl: '/profile.jpg',
+  avatarUrl: '/profile-shubham.jpg',
 };
 
 export const servicesData: Service[] = [
